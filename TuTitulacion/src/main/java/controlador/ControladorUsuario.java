@@ -8,8 +8,11 @@ package controlador;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  *
@@ -19,9 +22,15 @@ import modelo.UsuarioDAO;
 @SessionScoped
 public class ControladorUsuario implements Serializable {
 
+    @NotNull
     private String nombreUsuario;
+    @NotNull    
+    @Min(8)
     private String contrasenia;
+    @NotNull    
+    @Min(8)
     private String confirmacionContrasenia;
+    @NotNull
     private String correoElectronico;
     private String urlImagen;
 
@@ -31,10 +40,14 @@ public class ControladorUsuario implements Serializable {
     public ControladorUsuario() {}
     
     public String registra(){
+        try{
         Usuario u = new Usuario(nombreUsuario, contrasenia, correoElectronico, urlImagen);
         UsuarioDAO uDao = new UsuarioDAO();
         uDao.guarda(u);
         return "index";
+        }catch(ConstraintViolationException e){
+            
+        }
     }
 
     public String getNombreUsuario() {
