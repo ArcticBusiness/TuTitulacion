@@ -5,49 +5,47 @@
  */
 package controlador;
 
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
-import org.hibernate.exception.ConstraintViolationException;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author miguel
  */
-@Named(value = "controladorUsuario")
-@SessionScoped
+@ManagedBean
+@ViewScoped
 public class ControladorUsuario implements Serializable {
 
-    @NotNull
+    //@NotNull
     private String nombreUsuario;
-    @NotNull    
-    @Min(8)
+    //@NotNull
+    //@Min(8)
     private String contrasenia;
-    @NotNull    
-    @Min(8)
+    //@NotNull
+    //@Min(8)
     private String confirmacionContrasenia;
-    @NotNull
+    //@NotNull
     private String correoElectronico;
     private String urlImagen;
 
     /**
      * Creates a new instance of ControladorUsuario
      */
-    public ControladorUsuario() {}
-    
-    public String registra(){
-        try{
+    public ControladorUsuario() {
+    }
+
+    public String registra() {
+        System.out.println("Usuario: "+ nombreUsuario+","+contrasenia+","+correoElectronico+","+urlImagen);
         Usuario u = new Usuario(nombreUsuario, contrasenia, correoElectronico, urlImagen);
         UsuarioDAO uDao = new UsuarioDAO();
         uDao.guarda(u);
         return "index";
-        }catch(ConstraintViolationException e){
-            
-        }
+
     }
 
     public String getNombreUsuario() {
@@ -89,6 +87,5 @@ public class ControladorUsuario implements Serializable {
     public void setConfirmacionContrasenia(String confirmacionContrasenia) {
         this.confirmacionContrasenia = confirmacionContrasenia;
     }
-    
-    
+
 }
