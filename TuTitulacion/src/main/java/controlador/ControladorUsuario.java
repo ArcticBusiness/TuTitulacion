@@ -18,7 +18,6 @@ import javax.validation.ValidatorFactory;
 import modelo.CodigoVerificacionDe;
 import modelo.CodigoVerificacionDeDAO;
 import modelo.UsuarioDAO;
-import org.hibernate.validator.HibernateValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,7 +28,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @ManagedBean
 @RequestScoped
 public class ControladorUsuario implements Serializable {
-
+    
+    private int idUsuario;
     private String nombreUsuario;
     private String contrasenia;
     private String confirmacionContrasenia;
@@ -47,7 +47,6 @@ public class ControladorUsuario implements Serializable {
      * @return
      */
     public String registra() {
-        System.out.println(contrasenia.length());
         Usuario u = new Usuario(nombreUsuario, contrasenia, correoElectronico, urlImagen, false);
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
@@ -56,19 +55,21 @@ public class ControladorUsuario implements Serializable {
             for (ConstraintViolation<Usuario> error : validationErrors) {
                 System.out.println(error.getMessageTemplate() + "::" + error.getPropertyPath() + "::" + error.getMessage());
             }
+            return "registrar";
         } else {
             UsuarioDAO uDao = new UsuarioDAO();
             uDao.guarda(u);
             ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
             VerificationMailSender vms = (VerificationMailSender) context.getBean("verificationMailSender");
             Random random = new Random();
-            String codigo = String.format("%d%d%d%d%d%d", random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10));            
-            CodigoVerificacionDe cvd = new CodigoVerificacionDe(codigo, u.getIdUsuario());
+            String codigo = String.format("%d%d%d%d%d%d", random.nextInt(10), random.nextInt(10), random.nextInt(10), random.nextInt(10), random.nextInt(10), random.nextInt(10));            
+            this.idUsuario = u.getIdUsuario();
+            CodigoVerificacionDe cvd = new CodigoVerificacionDe(codigo, this.idUsuario);
             CodigoVerificacionDeDAO cdvDAO = new CodigoVerificacionDeDAO();
             cdvDAO.guarda(cvd);
             vms.sendMail("tutitulacion@gmail.com", correoElectronico, "Confirmación", "Tu código de verificación es: " + codigo);
+            return "verificacion_correo";
         }
-        return "index";
     }
 
     public String getNombreUsuario() {
@@ -111,4 +112,14 @@ public class ControladorUsuario implements Serializable {
         this.confirmacionContrasenia = confirmacionContrasenia;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    
+    
 }
