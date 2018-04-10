@@ -33,6 +33,40 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: codigo_verificacion_de; Type: TABLE; Schema: public; Owner: miguel
+--
+
+CREATE TABLE public.codigo_verificacion_de (
+    id_codigo_verificacion integer NOT NULL,
+    codigo_verificacion character varying(6),
+    fk_usuario integer
+);
+
+
+ALTER TABLE public.codigo_verificacion_de OWNER TO miguel;
+
+--
+-- Name: codigo_verificacion_de_id_codigo_verificacion_seq; Type: SEQUENCE; Schema: public; Owner: miguel
+--
+
+CREATE SEQUENCE public.codigo_verificacion_de_id_codigo_verificacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.codigo_verificacion_de_id_codigo_verificacion_seq OWNER TO miguel;
+
+--
+-- Name: codigo_verificacion_de_id_codigo_verificacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: miguel
+--
+
+ALTER SEQUENCE public.codigo_verificacion_de_id_codigo_verificacion_seq OWNED BY public.codigo_verificacion_de.id_codigo_verificacion;
+
+
+--
 -- Name: comentario; Type: TABLE; Schema: public; Owner: miguel
 --
 
@@ -178,7 +212,8 @@ CREATE TABLE public.usuario (
     nombre_usuario text,
     contrasenia text,
     correo_electronico text,
-    url_imagen text
+    url_imagen text,
+    correo_verificado boolean
 );
 
 
@@ -203,6 +238,13 @@ ALTER TABLE public.usuario_id_usuario_seq OWNER TO miguel;
 --
 
 ALTER SEQUENCE public.usuario_id_usuario_seq OWNED BY public.usuario.id_usuario;
+
+
+--
+-- Name: id_codigo_verificacion; Type: DEFAULT; Schema: public; Owner: miguel
+--
+
+ALTER TABLE ONLY public.codigo_verificacion_de ALTER COLUMN id_codigo_verificacion SET DEFAULT nextval('public.codigo_verificacion_de_id_codigo_verificacion_seq'::regclass);
 
 
 --
@@ -238,6 +280,21 @@ ALTER TABLE ONLY public.pregunta_de ALTER COLUMN id_pregunta_de SET DEFAULT next
 --
 
 ALTER TABLE ONLY public.usuario ALTER COLUMN id_usuario SET DEFAULT nextval('public.usuario_id_usuario_seq'::regclass);
+
+
+--
+-- Data for Name: codigo_verificacion_de; Type: TABLE DATA; Schema: public; Owner: miguel
+--
+
+COPY public.codigo_verificacion_de (id_codigo_verificacion, codigo_verificacion, fk_usuario) FROM stdin;
+\.
+
+
+--
+-- Name: codigo_verificacion_de_id_codigo_verificacion_seq; Type: SEQUENCE SET; Schema: public; Owner: miguel
+--
+
+SELECT pg_catalog.setval('public.codigo_verificacion_de_id_codigo_verificacion_seq', 1, true);
 
 
 --
@@ -306,12 +363,8 @@ SELECT pg_catalog.setval('public.pregunta_id_pregunta_seq', 1, true);
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: miguel
 --
 
-COPY public.usuario (id_usuario, nombre_usuario, contrasenia, correo_electronico, url_imagen) FROM stdin;
-1				
-2				
-3				
-4				
-5				
+COPY public.usuario (id_usuario, nombre_usuario, contrasenia, correo_electronico, url_imagen, correo_verificado) FROM stdin;
+1	MIguel	1995mamp	migue95ange@gmail.com	jseadfhagkuyfbaehr	t
 \.
 
 
@@ -319,7 +372,15 @@ COPY public.usuario (id_usuario, nombre_usuario, contrasenia, correo_electronico
 -- Name: usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: miguel
 --
 
-SELECT pg_catalog.setval('public.usuario_id_usuario_seq', 5, true);
+SELECT pg_catalog.setval('public.usuario_id_usuario_seq', 1, true);
+
+
+--
+-- Name: codigo_verificacion_de_pkey; Type: CONSTRAINT; Schema: public; Owner: miguel
+--
+
+ALTER TABLE ONLY public.codigo_verificacion_de
+    ADD CONSTRAINT codigo_verificacion_de_pkey PRIMARY KEY (id_codigo_verificacion);
 
 
 --
@@ -360,6 +421,14 @@ ALTER TABLE ONLY public.pregunta
 
 ALTER TABLE ONLY public.usuario
     ADD CONSTRAINT usuario_pkey PRIMARY KEY (id_usuario);
+
+
+--
+-- Name: codigo_verificacion_de_fk_usuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: miguel
+--
+
+ALTER TABLE ONLY public.codigo_verificacion_de
+    ADD CONSTRAINT codigo_verificacion_de_fk_usuario_fkey FOREIGN KEY (fk_usuario) REFERENCES public.usuario(id_usuario);
 
 
 --
