@@ -8,6 +8,8 @@ package modelo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import java.util.List;
+import org.hibernate.Query;
 
 /**
  *
@@ -37,6 +39,69 @@ public class PreguntaDAO {
             session.close();
         }
     }
+    
+         /**
+     * Regresa una lista con todos los Preguntas que estan activos en la base de datos.
+     * @return 
+     */
+    public List<Pregunta> buscar(String s) {
+        List<Pregunta> result = null;
+        // arbrimos la sesion son sessionFactory 
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            //iniciamos la transaccion, la consulta a realizar
+            tx = session.beginTransaction();
+            //Escribimos la consulta en HQL
+            String hql = " select p from Pregunta p where p.contenidoPregunta like '%"+s+"%' ";
+            Query query = session.createQuery(hql);
+            result = (List<Pregunta>)query.list();
+            tx.commit();
+        }
+        catch (Exception e) {
+            //si hay un problema regresamos la base aun estado antes de la consulta
+            if (tx!=null){
+                tx.rollback();
+           }
+           e.printStackTrace(); 
+        }finally {
+            //cerramos la session
+            session.close();
+        }
+        return result;
+    }
+    
+     /**
+     * Regresa una lista con todos las Preguntas que estan activas en la base de datos.
+     * @return 
+     */
+    public List<Pregunta> mostrarPreguntas() {
+        List<Pregunta> result = null;
+        // arbrimos la sesion son sessionFactory 
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            //iniciamos la transaccion, la consulta a realizar
+            tx = session.beginTransaction();
+            //Escribimos la consulta en HQL
+            String hql = "from Pregunta";
+            Query query = session.createQuery(hql);
+            result = (List<Pregunta>)query.list();
+            tx.commit();
+        }
+        catch (Exception e) {
+            //si hay un problema regresamos la base aun estado antes de la consulta
+            if (tx!=null){
+                tx.rollback();
+           }
+           e.printStackTrace(); 
+        }finally {
+            //cerramos la session
+            session.close();
+        }
+        return result;
+    }
+    
     /**
     public Pregunta buscar(Pregunta p){
         Session session = sessionFactory.openSession();

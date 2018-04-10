@@ -19,6 +19,7 @@ public class Usuario implements java.io.Serializable {
     private String contrasenia;
     private String correoElectronico;
     private String urlImagen;
+    
     private Set comentarioEns = new HashSet(0);
     private Set preguntaDes = new HashSet(0);
 

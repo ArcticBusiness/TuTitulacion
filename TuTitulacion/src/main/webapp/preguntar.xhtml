@@ -24,11 +24,16 @@ and open the template in the editor.
                 <h:outputText value="Pregunta: " />
                 <p:inputText value="#{controladorPregunta.contenidoPregunta}"/>
                 <br/>                
-                <h:outputText value="Fecha: " />
-                <p:calendar value="#{controladorPregunta.fechaPregunta}"/>
-                <br/>
                 <p:commandButton value=" Aceptar " action="#{controladorPregunta.guardaProyecto()}" />                
             </h:form>
+            <br />
+            <p:dataScroller value="#{controladorPregunta.pregunta}" var="pregunta" >
+                <h:outputText value="Pregunta: " style="font-weight: bold" />
+                <h:outputText value="#{pregunta.contenidoPregunta}" style="font-weight: bold" />
+                
+                <h:outputText value="Fecha: " style="font-weight: bold" />
+                <h:outputText value="#{pregunta.fechaPregunta}" style="font-weight: bold" />
+            </p:dataScroller>
         </h:body>
 
     </f:view>
