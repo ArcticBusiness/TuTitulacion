@@ -6,30 +6,33 @@
 package controlador;
 
 import java.io.Serializable;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import java.util.Random;
+import java.util.Set;
 import modelo.Usuario;
-import modelo.UsuarioDAO;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import modelo.CodigoVerificacionDe;
+import modelo.CodigoVerificacionDeDAO;
+import modelo.UsuarioDAO;
+import org.hibernate.validator.HibernateValidator;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author miguel
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ControladorUsuario implements Serializable {
 
-    //@NotNull
     private String nombreUsuario;
-    //@NotNull
-    //@Min(8)
     private String contrasenia;
-    //@NotNull
-    //@Min(8)
     private String confirmacionContrasenia;
-    //@NotNull
     private String correoElectronico;
     private String urlImagen;
 
@@ -39,13 +42,33 @@ public class ControladorUsuario implements Serializable {
     public ControladorUsuario() {
     }
 
+    /**
+     *
+     * @return
+     */
     public String registra() {
-        System.out.println("Usuario: "+ nombreUsuario+","+contrasenia+","+correoElectronico+","+urlImagen);
-        Usuario u = new Usuario(nombreUsuario, contrasenia, correoElectronico, urlImagen);
-        UsuarioDAO uDao = new UsuarioDAO();
-        uDao.guarda(u);
+        System.out.println(contrasenia.length());
+        Usuario u = new Usuario(nombreUsuario, contrasenia, correoElectronico, urlImagen, false);
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Usuario>> validationErrors = validator.validate(u);
+        if (!validationErrors.isEmpty()) {
+            for (ConstraintViolation<Usuario> error : validationErrors) {
+                System.out.println(error.getMessageTemplate() + "::" + error.getPropertyPath() + "::" + error.getMessage());
+            }
+        } else {
+            UsuarioDAO uDao = new UsuarioDAO();
+            uDao.guarda(u);
+            ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+            VerificationMailSender vms = (VerificationMailSender) context.getBean("verificationMailSender");
+            Random random = new Random();
+            String codigo = String.format("%d%d%d%d%d%d", random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10),random.nextInt(10));            
+            CodigoVerificacionDe cvd = new CodigoVerificacionDe(codigo, u.getIdUsuario());
+            CodigoVerificacionDeDAO cdvDAO = new CodigoVerificacionDeDAO();
+            cdvDAO.guarda(cvd);
+            vms.sendMail("tutitulacion@gmail.com", correoElectronico, "Confirmación", "Tu código de verificación es: " + codigo);
+        }
         return "index";
-
     }
 
     public String getNombreUsuario() {

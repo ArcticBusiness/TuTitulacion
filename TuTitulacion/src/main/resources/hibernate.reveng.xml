@@ -46,4 +46,5 @@ Contributor(s):
   <table-filter match-name="pregunta"/>
   <table-filter match-name="usuario"/>
   <table-filter match-name="pregunta_de"/>
+  <table-filter match-name="codigo_verificacion_de"/>
 </hibernate-reverse-engineering>
