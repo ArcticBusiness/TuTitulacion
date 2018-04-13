@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import javax.faces.bean.ManagedBean;
@@ -40,8 +35,8 @@ public class ControladorVerificacionCorreo {
             uDAO.actualiza(u);
             cDAO.elimina(cvd);
             return "index";
-        } else {
-            System.out.println("Código de verificación incorrecto");
+        } else {    
+            System.out.println("Código de verificación incorrecto");                
             return "verificacion_correo";
         }
     }

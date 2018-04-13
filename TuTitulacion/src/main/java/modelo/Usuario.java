@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 public class Usuario implements java.io.Serializable {
 
     private int idUsuario;
-    @NotBlank
+    @NotBlank(message = "Por favor, escriba su nombre")
     private String nombreUsuario;
     @Size(min = 8, max = 100, message = "La contraseña debe contener al menos 8 caracteres")
     private String contrasenia;
-    @Email
-    @NotBlank
+    @Email(message = "Por favor, ingrese un email válido")
+    @NotBlank(message = "Por favor, ingrese un email")
     private String correoElectronico;
     private String urlImagen;
     private boolean correoVerificado;

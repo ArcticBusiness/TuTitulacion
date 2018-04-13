@@ -8,7 +8,7 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui">
 
     <f:view contentType="text/html">
@@ -20,23 +20,28 @@ and open the template in the editor.
         </h:head>
 
         <h:body>
-            <h:form>
-                <h:outputText value="Nombre: " />
-                <p:inputText value="#{controladorUsuario.nombreUsuario}"/>
+            <h:form id="registro_form" enctype="multipart/form-data">
+                <h:outputText value="*Nombre: " />
+                <p:inputText value="#{controladorUsuario.nombreUsuario}" id="nombreUsuario"/>
+                <p:messages for="nombreUsuario" autoUpdate="true" closable="true"/>
                 <br/>                   
-                <h:outputText value="Contraseña: " />
-                <h:inputSecret value="#{controladorUsuario.contrasenia}"/>
+                <h:outputText value="*Contraseña: "/>
+                <p:password value="#{controladorUsuario.contrasenia}" id="pswd1"/>
+                <p:messages for="pswd1" autoUpdate="true" closable="true"/>
                 <br/>                
-                <h:outputText value="Confirmacion Contraseña: " />
-                <h:inputSecret value="#{controladorUsuario.confirmacionContrasenia}"/>
+                <h:outputText value="*Confirmacion Contraseña: " />
+                <p:password value="#{controladorUsuario.confirmacionContrasenia}" id="pswd2"/>
+                <p:messages for="pswd2" autoUpdate="true" closable="true" />
                 <br/>                
-                <h:outputText value="Correo electrónico: " />
-                <p:inputText value="#{controladorUsuario.correoElectronico}"/>
+                <h:outputText value="*Correo electrónico: " />
+                <p:inputText value="#{controladorUsuario.correoElectronico}" id="correo"/>
+                <p:messages for="correo" autoUpdate="true" closable="true"/>
                 <br/>                
-                <h:outputText value="Imagen: " />
-                <p:inputText value="#{controladorUsuario.urlImagen}"/>
+                <h:outputText value="Foto de perfil: " />
+                <p:fileUpload value="#{controladorUsuario.fotoPerfil}" mode="simple" skinSimple="true" label="Escoger foto" id="foto"/>
+                <p:messages for="foto" autoUpdate="true" closable="true"/>
                 <br/>
-                <p:commandButton value=" Aceptar " action="#{controladorUsuario.registra()}" />
+                <p:commandButton value="Aceptar" ajax="false" action="#{controladorUsuario.registra()}" />
             </h:form>
         </h:body>
 
