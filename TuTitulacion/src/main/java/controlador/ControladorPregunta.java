@@ -2,6 +2,8 @@
 package controlador;
 
 import java.util.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Pregunta;
@@ -11,9 +13,13 @@ import modelo.PreguntaDAO;
 @ViewScoped
 public class ControladorPregunta {
     
+    private List<Pregunta> preguntas;
     private String contenidoPregunta;
     private Date fechaPregunta;
     
+    public List<Pregunta> getPregunta(){
+        return preguntas;
+    }
     public String getContenidoPregunta(){
         return contenidoPregunta;
     }
@@ -36,9 +42,14 @@ public class ControladorPregunta {
     public void guardaProyecto(){
         Pregunta p = new Pregunta();
         p.setContenidoPregunta(contenidoPregunta);
-        p.setFechaPregunta(fechaPregunta);
+        p.setFechaPregunta(new Date());
         PreguntaDAO pd = new PreguntaDAO();
         pd.guarda(p);
+    }
+    @PostConstruct
+    public void verPreguntas(){
+        PreguntaDAO pd = new PreguntaDAO();
+        preguntas = pd.mostrarPreguntas();
     }
     
 }

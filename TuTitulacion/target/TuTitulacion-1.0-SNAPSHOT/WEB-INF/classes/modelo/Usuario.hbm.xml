@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/03/2018 01:55:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.Usuario" table="usuario" schema="public" optimistic-lock="version">
+        <id name="idUsuario" type="int">
+            <column name="id_usuario" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombreUsuario" type="string">
+            <column name="nombre_usuario" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="contrasenia" />
+        </property>
+        <property name="correoElectronico" type="string">
+            <column name="correo_electronico" />
+        </property>
+        <property name="urlImagen" type="string">
+            <column name="url_imagen" />
+        </property>
+        <set name="comentarioEns" table="comentario_en" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="fk_usuario" />
+            </key>
+            <one-to-many class="modelo.ComentarioEn" />
+        </set>
+        <set name="preguntaDes" table="pregunta_de" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="fk_usuario" />
+            </key>
+            <one-to-many class="modelo.PreguntaDe" />
+        </set>
+    </class>
+</hibernate-mapping>
