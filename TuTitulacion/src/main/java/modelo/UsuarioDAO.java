@@ -26,8 +26,8 @@ public class UsuarioDAO {
     }
 
     /**
-     * 
-     * @param u 
+     *
+     * @param u
      */
     public void guarda(Usuario u) {
         Session session = sessionFactory.openSession();
@@ -47,9 +47,9 @@ public class UsuarioDAO {
     }
 
     /**
-     * 
+     *
      * @param idUsuario
-     * @return 
+     * @return
      */
     public Usuario getUsuarioById(int idUsuario) {
         Usuario u = null;
@@ -72,8 +72,8 @@ public class UsuarioDAO {
     }
 
     /**
-     * 
-     * @param u 
+     *
+     * @param u
      */
     public void actualiza(Usuario u) {
         Session session = sessionFactory.openSession();
@@ -90,5 +90,34 @@ public class UsuarioDAO {
         } finally {
             session.close();
         }
+    }
+
+    public Usuario encuentra(String correo, String pass) {
+        Usuario result = null;
+        // arbrimos la sesion son sessionFactory 
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            //iniciamos la transaccion, la consulta a realizar
+            tx = session.beginTransaction();
+            //Escribimos la consulta en HQL
+            //String hql = " select e from Empleado e join fetch e.trabajars where correo like '%"+correo+"%' and contrasenia = :pass" ;
+            String hql = " select u from Usuario u where correo_electronico like '%" + correo + "%' and contrasenia = :pass";
+            Query query = session.createQuery(hql);
+            query.setParameter("pass", pass);
+            //query.setParameter("correo", correo);
+            result = (Usuario) query.uniqueResult();
+            tx.commit();
+        } catch (Exception e) {
+            //si hay un problema regresamos la base aun estado antes de la consulta
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            //cerramos la session
+            session.close();
+        }
+        return result;
     }
 }

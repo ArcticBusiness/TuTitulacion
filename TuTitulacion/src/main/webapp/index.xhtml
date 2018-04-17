@@ -3,33 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Tu Titulación</title>
     </h:head>
-    <h:body>
-        <h:form>
-            <h:outputText value="Busca: " />
-            <p:inputText value="#{verBuscaPreguntas.search}"/>                
-            <p:commandButton value=" Buscar " action="#{verBuscaPreguntas.busca()}" />
-        </h:form>
-        <h:dataTable value="#{controladorComentario.comentarios}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Title"/>
-                </f:facet>
-                <h:outputText value="#{item.contenidoComentario}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Description"/>
-                </f:facet>
-                <h:outputText value="#{item.idComentario}"/>
-            </h:column>            
-        </h:dataTable>
-        <h:link outcome="registrar" value="Registrate" />
-        <br />
-        <h:link outcome="preguntar" value="Preguntar" />
-    </h:body>
+    <ui:composition template="./newTemplate.xhtml">
+        <ui:define name="top">
+            <h:form>
+                <p:inputText value="#{verBuscaPreguntas.search}" placeholder="Busca en el foro"/>                
+                <p:commandButton value=" Buscar " action="#{verBuscaPreguntas.busca()}" />
+            </h:form>
+            <h:link outcome="registrar" value="Registrate     " />            
+            <h:link outcome="iniciarSesion" value="Iniciar Sesión" />
+        </ui:define>
+        <ui:define name="body">
+          
+        </ui:define>
+    </ui:composition>   
 </html>
 

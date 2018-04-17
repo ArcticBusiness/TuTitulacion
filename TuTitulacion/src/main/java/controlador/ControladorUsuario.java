@@ -90,7 +90,7 @@ public class ControladorUsuario implements Serializable {
             fotoPerfil = null;
             return "registrar";
         } else {
-            UsuarioDAO uDao = new UsuarioDAO();              
+            UsuarioDAO uDao = new UsuarioDAO();
             uDao.guarda(u);
             ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
             VerificationMailSender vms = (VerificationMailSender) context.getBean("verificationMailSender");
@@ -106,7 +106,7 @@ public class ControladorUsuario implements Serializable {
                 copyFile(nuevoNombreFoto);
                 u.setUrlImagen("/src/main/webapp/img_usuarios/" + nuevoNombreFoto);
                 uDao.actualiza(u);
-            }else{
+            } else {
                 u.setUrlImagen("/src/main/webapp/img_usuarios/default.png");
                 uDao.actualiza(u);
             }
@@ -115,8 +115,8 @@ public class ControladorUsuario implements Serializable {
     }
 
     /**
-     * 
-     * @param fileName 
+     *
+     * @param fileName
      */
     private void copyFile(String fileName) {
         try {
@@ -136,26 +136,50 @@ public class ControladorUsuario implements Serializable {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
+    /**
+     * 
+     * @param nombreUsuario 
+     */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getContrasenia() {
         return contrasenia;
     }
 
+    /**
+     * 
+     * @param contrasenia 
+     */
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getCorreoElectronico() {
         return correoElectronico;
     }
 
+    /**
+     * 
+     * @param correoElectronico 
+     */
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
     }

@@ -18,32 +18,36 @@ and open the template in the editor.
                 <title>Registrar</title>
             </f:facet>
         </h:head>
-
-        <h:body>
-            <h:form id="registro_form" enctype="multipart/form-data">
-                <h:outputText value="*Nombre: " />
-                <p:inputText value="#{controladorUsuario.nombreUsuario}" id="nombreUsuario"/>
-                <p:messages for="nombreUsuario" autoUpdate="true" closable="true"/>
-                <br/>                   
-                <h:outputText value="*Contraseña: "/>
-                <p:password value="#{controladorUsuario.contrasenia}" id="pswd1"/>
-                <p:messages for="pswd1" autoUpdate="true" closable="true"/>
-                <br/>                
-                <h:outputText value="*Confirmacion Contraseña: " />
-                <p:password value="#{controladorUsuario.confirmacionContrasenia}" id="pswd2"/>
-                <p:messages for="pswd2" autoUpdate="true" closable="true" />
-                <br/>                
-                <h:outputText value="*Correo electrónico: " />
-                <p:inputText value="#{controladorUsuario.correoElectronico}" id="correo"/>
-                <p:messages for="correo" autoUpdate="true" closable="true"/>
-                <br/>                
-                <h:outputText value="Foto de perfil: " />
-                <p:fileUpload value="#{controladorUsuario.fotoPerfil}" mode="simple" skinSimple="true" label="Escoger foto" id="foto"/>
-                <p:messages for="foto" autoUpdate="true" closable="true"/>
-                <br/>
-                <p:commandButton value="Aceptar" ajax="false" action="#{controladorUsuario.registra()}" />
-            </h:form>
-        </h:body>
+        <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="top">
+                <h:link outcome="iniciarSesion" value="Iniciar Sesión" />
+            </ui:define>
+            <ui:define name="body">
+                <h:form id="registro_form" enctype="multipart/form-data">
+                    <h:outputText value="*Nombre: " />
+                    <p:inputText value="#{controladorUsuario.nombreUsuario}" id="nombreUsuario"/>
+                    <p:messages for="nombreUsuario" autoUpdate="true" closable="true"/>
+                    <br/>                   
+                    <h:outputText value="*Contraseña: "/>
+                    <p:password value="#{controladorUsuario.contrasenia}" id="pswd1"/>
+                    <p:messages for="pswd1" autoUpdate="true" closable="true"/>
+                    <br/>                
+                    <h:outputText value="*Confirmacion Contraseña: " />
+                    <p:password value="#{controladorUsuario.confirmacionContrasenia}" id="pswd2"/>
+                    <p:messages for="pswd2" autoUpdate="true" closable="true" />
+                    <br/>                
+                    <h:outputText value="*Correo electrónico: " />
+                    <p:inputText value="#{controladorUsuario.correoElectronico}" id="correo"/>
+                    <p:messages for="correo" autoUpdate="true" closable="true"/>
+                    <br/>                
+                    <h:outputText value="Foto de perfil: " />
+                    <p:fileUpload value="#{controladorUsuario.fotoPerfil}" mode="simple" skinSimple="true" label="Escoger foto" id="foto"/>
+                    <p:messages for="foto" autoUpdate="true" closable="true"/>
+                    <br/>
+                    <p:commandButton value="Aceptar" ajax="false" action="#{controladorUsuario.registra()}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
 
     </f:view>
 </html>
