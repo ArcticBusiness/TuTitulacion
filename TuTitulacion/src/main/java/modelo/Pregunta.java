@@ -1,9 +1,11 @@
 package modelo;
 // Generated 9/04/2018 11:24:07 PM by Hibernate Tools 4.3.1
 
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
