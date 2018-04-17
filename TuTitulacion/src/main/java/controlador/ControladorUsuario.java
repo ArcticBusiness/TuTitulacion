@@ -32,7 +32,8 @@ public class ControladorUsuario implements Serializable {
     //@NotNull
     private String correoElectronico;
     private String urlImagen;
-
+    
+    private String usuarioBorrar;
     /**
      * Creates a new instance of ControladorUsuario
      */
@@ -45,9 +46,18 @@ public class ControladorUsuario implements Serializable {
         UsuarioDAO uDao = new UsuarioDAO();
         uDao.guarda(u);
         return "index";
-
     }
 
+    public String elimina(String a) {
+        UsuarioDAO uDao = new UsuarioDAO();
+        Usuario user = new Usuario();
+        user.setNombreUsuario(a);
+        user.setIdUsuario(3);
+        System.out.print(a);
+        uDao.elimina(user);
+        return user.getNombreUsuario();
+    }
+    
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -64,8 +74,13 @@ public class ControladorUsuario implements Serializable {
         this.contrasenia = contrasenia;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public void setUsuarioBorrar(String usuario) {
+        this.usuarioBorrar = usuario;
+    }
+
+    
+    public String getUsuarioBorrar() {
+        return usuarioBorrar;
     }
 
     public void setCorreoElectronico(String correoElectronico) {

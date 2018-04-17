@@ -22,9 +22,9 @@ and open the template in the editor.
         <h:body>
             <h:form>
                 <h:outputText value="Ingresa el usuario que quieres eliminar" />
-                <p:inputText/>
+                <p:inputText value="#{controladorUsuario.usuarioBorrar}"/>
                 <br/>
-                <p:commandButton value=" Aceptar " action="#{controladorUsuario.elimina()}" />
+                <p:commandButton value=" Aceptar " action="#{controladorUsuario.elimina(controladorUsuario.usuarioBorrar)}" />
             </h:form>
         </h:body>
 

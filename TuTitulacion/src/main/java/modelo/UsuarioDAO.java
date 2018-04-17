@@ -40,4 +40,28 @@ public class UsuarioDAO {
             session.close();
         }
     }
+    
+        public void elimina(Usuario p){
+        //System.out.println("aposdjaspodjaspodjaspodjaspodjaposjdpaosjdpaosjdpaos");
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+           tx = session.beginTransaction();
+
+           session.delete(p);
+           
+               tx.commit();
+
+        }
+        catch (Exception e) {
+           if (tx!=null){ 
+               tx.rollback();
+           }
+           e.printStackTrace(); 
+        }finally {
+           session.close();
+        }    
+
+        }
+        
 }
