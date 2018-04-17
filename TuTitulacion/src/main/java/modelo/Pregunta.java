@@ -1,9 +1,9 @@
 package modelo;
-// Generated 30/03/2018 01:55:12 PM by Hibernate Tools 4.3.1
-
+// Generated 9/04/2018 11:24:07 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -11,17 +11,16 @@ import java.util.Set;
  */
 public class Pregunta  implements java.io.Serializable {
 
-
      private int idPregunta;
      private String contenidoPregunta;
      private Date fechaPregunta;
      private Set preguntaDes = new HashSet(0);
      private Set comentarioEns = new HashSet(0);
+     private LinkedList<Comentario> comentarios;
 
     public Pregunta() {
     }
-
-	
+    
     public Pregunta(int idPregunta) {
         this.idPregunta = idPregunta;
     }
@@ -35,6 +34,18 @@ public class Pregunta  implements java.io.Serializable {
    
     public int getIdPregunta() {
         return this.idPregunta;
+    }
+
+    public LinkedList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(LinkedList<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+    
+    public void agregaComentario(Comentario c) {
+        comentarios.add(c);
     }
     
     public void setIdPregunta(int idPregunta) {
@@ -73,5 +84,3 @@ public class Pregunta  implements java.io.Serializable {
 
 
 }
-
-
