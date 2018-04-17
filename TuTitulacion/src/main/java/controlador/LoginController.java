@@ -16,7 +16,7 @@ import util.SessionUtils;
 
 /**
  *
- * @author miguel
+ * @author Felipe
  */
 @ManagedBean
 @SessionScoped
@@ -35,7 +35,7 @@ public class LoginController {
         if (usuario != null) {
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", user);
-            return "/privado/index_usuarios";
+            return "/index";
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
@@ -53,7 +53,7 @@ public class LoginController {
     public String cerrarSesion() {
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
-        return "iniciarSesion";
+        return "/iniciarSesion";
     }
 
     public String getPwd() {

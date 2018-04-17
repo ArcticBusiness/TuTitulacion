@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.util.List;
@@ -51,6 +46,6 @@ public class VerBuscaPreguntas {
     public String busca() {
         PreguntaDAO lib = new PreguntaDAO();
         resultados= lib.buscar(search);
-        return "buscar.xhtml";
+        return "/buscar";
     }
 }

@@ -1,5 +1,8 @@
 package util;
 
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,8 +11,19 @@ import javax.servlet.http.HttpSession;
  *
  * @author miguel
  */
+@ManagedBean
+@ViewScoped
 public class SessionUtils {
 
+    private HttpSession sesion;
+
+    @PostConstruct
+    public void iniciar() {
+        sesion = getSession();
+    }
+
+    
+    
     public static HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -34,4 +48,14 @@ public class SessionUtils {
             return null;
         }
     }
+
+    public HttpSession getSesion() {
+        return sesion;
+    }
+
+    public void setSesion(HttpSession sesion) {
+        this.sesion = sesion;
+    }
+    
+    
 }

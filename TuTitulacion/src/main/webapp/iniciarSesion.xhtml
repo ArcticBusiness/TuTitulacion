@@ -18,11 +18,10 @@ and open the template in the editor.
             <h:form>
                 <p:inputText value="#{verBuscaPreguntas.search}" placeholder="Busca en el foro"/>                
                 <p:commandButton value=" Buscar " action="#{verBuscaPreguntas.busca()}" />
-            </h:form>
-            <h:link outcome="registrar" value="Registrate" />
+            </h:form>            
         </ui:define>
         <ui:define name="body">
-            <h1>Iniciar sesión  </h1>
+            <h1>Inicia sesión o <h:link outcome="registrar" value="Regístrate" /></h1> 
             <h:form>
                 <p:messages id="messages" showDetail="true" closable="true">
                     <p:autoUpdate/>

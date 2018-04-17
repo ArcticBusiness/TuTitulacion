@@ -16,22 +16,29 @@ and open the template in the editor.
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Buscar</title>
-            </f:facet>
+            </f:facet>  
         </h:head>
+        <ui:composition template="./newTemplate.xhtml">
+            <ui:define name="top">
+                <h:form>
+                    <p:inputText value="#{verBuscaPreguntas.search}" placeholder="Busca en el foro"/>                
+                    <p:commandButton value=" Buscar " action="#{verBuscaPreguntas.busca()}" />
+                </h:form>
+                <h:link outcome="registrar" value="Registrate     " />            
+                <h:link outcome="iniciarSesion" value="Iniciar Sesión" />
+            </ui:define>
+            <ui:define name="body">
+                <h1>Resultados</h1>
+                <p:dataScroller value="#{verBuscaPreguntas.preguntas}" var="pregunta" rendered="#{verBuscaPreguntas.resultados == null}" >
+                    <h:outputText value="Contenido: " style="font-weight: bold" />
+                    <h:outputText value="#{pregunta.contenidoPregunta}" style="font-weight: bold" />
+                </p:dataScroller>
+                <p:dataScroller value="#{verBuscaPreguntas.resultados}" var="pregunta" rendered="#{verBuscaPreguntas.resultados != null}" >
+                    <h:outputText value="Contenido: " style="font-weight: bold" />
+                    <h:outputText value="#{pregunta.contenidoPregunta}" style="font-weight: bold" />
+                </p:dataScroller>
+            </ui:define>
 
-        <h:body>
-            <h:form>
-                <h:link outcome="index" value="Regresar" />
-            </h:form>
-            <p:dataScroller value="#{verBuscaPreguntas.preguntas}" var="pregunta" rendered="#{verBuscaPreguntas.resultados == null}" >
-                <h:outputText value="Contenido: " style="font-weight: bold" />
-                <h:outputText value="#{pregunta.contenidoPregunta}" style="font-weight: bold" />
-            </p:dataScroller>
-            <p:dataScroller value="#{verBuscaPreguntas.resultados}" var="pregunta" rendered="#{verBuscaPreguntas.resultados != null}" >
-                <h:outputText value="Contenido: " style="font-weight: bold" />
-                <h:outputText value="#{pregunta.contenidoPregunta}" style="font-weight: bold" />
-            </p:dataScroller>
-        </h:body>
-
+        </ui:composition>
     </f:view>
 </html>
