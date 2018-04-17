@@ -5,31 +5,37 @@
  */
 package modelo;
 
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
-import org.hibernate.Query;
 
 /**
  *
- * @author Administrador
+ * @author miguel
  */
-public class PreguntaDAO {
+public class PreguntaDeDAO {
     private SessionFactory sessionFactory;
-    
-    public PreguntaDAO(){
+
+    /**
+     *
+     */
+    public PreguntaDeDAO() {
         this.sessionFactory = HibernateUtil.getSessionFactory();
     }
     
-    public void guarda(Pregunta p){
+    /**
+     * 
+     * @param p 
+     */
+    public void guarda(PreguntaDe p){
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
             session.persist(p);
             tx.commit();
-     
         }catch (Exception e){
             if (tx != null){
                 tx.rollback();
@@ -40,43 +46,12 @@ public class PreguntaDAO {
         }
     }
     
-         /**
-     * Regresa una lista con todos los Preguntas que estan activos en la base de datos.
-     * @return 
-     */
-    public List<Pregunta> buscar(String s) {
-        List<Pregunta> result = null;
-        // arbrimos la sesion son sessionFactory 
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try {
-            //iniciamos la transaccion, la consulta a realizar
-            tx = session.beginTransaction();
-            //Escribimos la consulta en HQL
-            String hql = " select p from Pregunta p where p.contenidoPregunta like '%"+s+"%' ";
-            Query query = session.createQuery(hql);
-            result = (List<Pregunta>)query.list();
-            tx.commit();
-        }
-        catch (Exception e) {
-            //si hay un problema regresamos la base aun estado antes de la consulta
-            if (tx!=null){
-                tx.rollback();
-           }
-           e.printStackTrace(); 
-        }finally {
-            //cerramos la session
-            session.close();
-        }
-        return result;
-    }
-    
      /**
      * Regresa una lista con todos las Preguntas que estan activas en la base de datos.
      * @return 
      */
-    public List<Pregunta> mostrarPreguntas() {
-        List<Pregunta> result = null;
+    public List<PreguntaDe> mostrarPreguntas() {
+        List<PreguntaDe> result = null;
         // arbrimos la sesion son sessionFactory 
         Session session = sessionFactory.openSession();
         Transaction tx = null;
@@ -84,9 +59,9 @@ public class PreguntaDAO {
             //iniciamos la transaccion, la consulta a realizar
             tx = session.beginTransaction();
             //Escribimos la consulta en HQL
-            String hql = "from Pregunta";
+            String hql = "from PreguntaDe";
             Query query = session.createQuery(hql);
-            result = (List<Pregunta>)query.list();
+            result = (List<PreguntaDe>)query.list();
             tx.commit();
         }
         catch (Exception e) {

@@ -18,7 +18,10 @@
             <h:link outcome="iniciarSesion" value="Iniciar Sesión" />
         </ui:define>
         <ui:define name="body">
-          
+            <h1>Temas recientes</h1>
+            <p:dataScroller value="#{controladorPreguntaDe.preguntas}" var="pregunta">
+                <h:outputText value="#{pregunta.usuario.nombreUsuario} preguntó: " style="font-weight: bold" /> <h:outputText value="#{pregunta.pregunta.contenidoPregunta}" style="font-weight: bold" />
+            </p:dataScroller>
         </ui:define>
     </ui:composition>   
 </html>

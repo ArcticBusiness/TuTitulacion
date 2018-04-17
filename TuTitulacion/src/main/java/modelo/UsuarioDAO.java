@@ -120,4 +120,29 @@ public class UsuarioDAO {
         }
         return result;
     }
+    
+    /**
+     *
+     * @param idUsuario
+     * @return
+     */
+    public Usuario getUsuarioByEmail(String email) {
+        Usuario u = null;
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "from Usuario where correoElectronico = '" + email+ "'";
+            Query query = session.createQuery(hql);
+            u = (Usuario) query.uniqueResult();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return u;
+    }
 }

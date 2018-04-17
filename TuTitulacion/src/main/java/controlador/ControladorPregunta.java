@@ -8,6 +8,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Pregunta;
 import modelo.PreguntaDAO;
+import modelo.PreguntaDe;
+import modelo.PreguntaDeDAO;
+import modelo.Usuario;
+import modelo.UsuarioDAO;
+import util.SessionUtils;
 
 @ManagedBean
 @ViewScoped
@@ -39,13 +44,21 @@ public class ControladorPregunta {
     /**
      * peticion que guarda una pregunta
      */
-    public void guardaProyecto(){
+    public String preguntar(){
+        
         Pregunta p = new Pregunta();
         p.setContenidoPregunta(contenidoPregunta);
         p.setFechaPregunta(new Date());
         PreguntaDAO pd = new PreguntaDAO();
         pd.guarda(p);
+        UsuarioDAO udao = new UsuarioDAO();
+        Usuario u = udao.getUsuarioByEmail((String)SessionUtils.getSession().getAttribute("username"));
+        PreguntaDe pde = new PreguntaDe(p, u);
+        PreguntaDeDAO pdedao = new PreguntaDeDAO();
+        pdedao.guarda(pde);
+        return "/index";    
     }
+    
     @PostConstruct
     public void verPreguntas(){
         PreguntaDAO pd = new PreguntaDAO();

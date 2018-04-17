@@ -35,13 +35,13 @@ public class LoginController {
         if (usuario != null) {
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", user);
-            return "preguntar";
+            return "/privado/index_usuarios";
         } else {
             FacesContext.getCurrentInstance().addMessage(
                     null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                             "Cuenta o contraseña incorrecta",
-                            "Pro favor, intentelo de nuevo"));
+                            "Por favor, intentelo de nuevo"));
             return "iniciarSesion";
         }
     }
