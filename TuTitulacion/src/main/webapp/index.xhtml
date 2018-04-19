@@ -20,7 +20,10 @@
         <ui:define name="body">
             <h1>Temas recientes</h1>
             <p:dataScroller value="#{controladorPreguntaDe.preguntas}" var="pregunta">
-                <h:outputText value="#{pregunta.usuario.nombreUsuario} preguntó: " style="font-weight: bold" /> <h:outputText value="#{pregunta.pregunta.contenidoPregunta}" style="font-weight: bold" />
+                <h:outputText value="#{pregunta.usuario.nombreUsuario} preguntó: " style="font-weight: bold" /> 
+                <h:outputText value="#{pregunta.pregunta.contenidoPregunta}" style="font-weight: bold" />
+                <!-- Obtenemos el identificador de la pregunta para pasarselo a la vistaPregunta -->
+                <p:commandButton value="Ver" action="#{controladorComentarioEn.verComentariosEn(pregunta.pregunta.idPregunta)}"/>
             </p:dataScroller>
         </ui:define>
     </ui:composition>   

@@ -8,20 +8,39 @@ package modelo;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 /**
  *
  * @author miguel
  */
 public class ComentarioDAO {
-
+    private SessionFactory sessionFactory;
     Session session;
 
     public ComentarioDAO() {
-        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+        this.sessionFactory = HibernateUtil.getSessionFactory();
     }
-
-    public List getComentarios() {
+   
+    public void guarda(Comentario c){
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.persist(c);
+            tx.commit();
+        }catch (Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();         
+        }finally{
+            session.close();
+        }        
+    }
+    
+    public List<Comentario> getComentarios() {
         List<Comentario> comentarios = null;
         try {
             org.hibernate.Transaction tx = session.beginTransaction();

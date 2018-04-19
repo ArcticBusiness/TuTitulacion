@@ -18,9 +18,17 @@ import util.SessionUtils;
 @ViewScoped
 public class ControladorPregunta {
     
+    private Pregunta pregunta;
     private List<Pregunta> preguntas;
     private String contenidoPregunta;
     private Date fechaPregunta;
+    
+    public Pregunta getPreguntaP(){
+        return pregunta;    
+    }
+    public void setPregunta(Pregunta pregunta){
+        this.pregunta = pregunta;
+    }
     
     public List<Pregunta> getPregunta(){
         return preguntas;

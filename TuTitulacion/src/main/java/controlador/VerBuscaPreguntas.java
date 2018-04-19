@@ -46,6 +46,6 @@ public class VerBuscaPreguntas {
     public String busca() {
         PreguntaDAO lib = new PreguntaDAO();
         resultados= lib.buscar(search);
-        return "/buscar";
+        return "buscar?faces-redirect-true";
     }
 }

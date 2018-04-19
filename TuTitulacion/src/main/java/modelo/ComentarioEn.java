@@ -17,15 +17,21 @@ public class ComentarioEn  implements java.io.Serializable {
     public ComentarioEn() {
     }
 
-	
     public ComentarioEn(int idComentarioEn) {
         this.idComentarioEn = idComentarioEn;
     }
+    
     public ComentarioEn(int idComentarioEn, Comentario comentario, Pregunta pregunta, Usuario usuario) {
        this.idComentarioEn = idComentarioEn;
        this.comentario = comentario;
        this.pregunta = pregunta;
        this.usuario = usuario;
+    }
+    
+    public ComentarioEn(Comentario comentario, Pregunta pregunta, Usuario usuario){
+        this.comentario = comentario;
+        this.pregunta = pregunta;
+        this.usuario = usuario;        
     }
    
     public int getIdComentarioEn() {

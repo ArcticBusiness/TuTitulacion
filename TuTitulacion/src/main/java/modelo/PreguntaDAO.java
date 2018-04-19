@@ -40,6 +40,26 @@ public class PreguntaDAO {
         }
     }
     
+    public Pregunta getPreguntaById(int idPregunta){
+        Pregunta p = null;
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "from Pregunta where id_pregunta = " + idPregunta;
+            Query query = session.createQuery(hql);
+            p = (Pregunta) query.uniqueResult();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return p;
+    }
+    
          /**
      * Regresa una lista con todos los Preguntas que estan activos en la base de datos.
      * @return 
